@@ -37,6 +37,11 @@ module.exports = { Attendance, Employee };
 
 // --- RUTAS API ---
 
+// Nueva ruta de prueba para verificar que el servidor está activo
+app.get('/', (req, res) => {
+    res.send('Servidor de control de asistencia activo.');
+});
+
 // Ruta para obtener un empleado por su ID
 app.get('/api/employees/:employeeId', async (req, res) => {
     try {
@@ -118,6 +123,4 @@ app.get('/api/attendance', async (req, res) => {
 app.listen(port, () => {
     console.log(`Servidor escuchando en http://localhost:${port}`);
 });
-
-
 
