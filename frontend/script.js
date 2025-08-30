@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskInput = document.getElementById('task');
     const attendanceForm = document.getElementById('attendance-form');
     const messageContainer = document.getElementById('message-container');
+    const BACKEND_URL = 'https://control-asistencia-metalotecnia.onrender.com';
 
     let currentAttendanceId = null;
 
@@ -23,7 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const employeeRes = await fetch(`http://localhost:3000/api/employees/${employeeId}`);
+            // Se corrige la URL de la API para buscar un empleado
+            const employeeRes = await fetch(`${BACKEND_URL}/api/employees/${employeeId}`);
             if (!employeeRes.ok) {
                 showMessage('ID de empleado no encontrado.', 'error');
                 statusContainer.classList.add('hidden');
@@ -32,8 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const employee = await employeeRes.json();
             employeeNameDisplay.textContent = `Hola, ${employee.name}`;
             
-            // Check for active attendance record
-            const attendanceRes = await fetch(`http://localhost:3000/api/attendance?employeeId=${employeeId}`);
+            // Se corrige la URL de la API para buscar un registro de asistencia
+            const attendanceRes = await fetch(`${BACKEND_URL}/api/attendance/${employeeId}`);
             const records = await attendanceRes.json();
             const activeRecord = records.find(record => !record.checkOutTime);
 
@@ -72,7 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/api/checkin', {
+            // Se corrige la URL de la API para la entrada
+            const response = await fetch(`${BACKEND_URL}/api/attendance/checkin`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ employeeId, task })
@@ -100,7 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:3000/api/checkout/${currentAttendanceId}`, {
+            // Se corrige la URL de la API para la salida
+            const response = await fetch(`${BACKEND_URL}/api/attendance/checkout/${currentAttendanceId}`, {
                 method: 'PATCH'
             });
 

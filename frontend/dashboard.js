@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewAllBtn = document.getElementById('view-all-btn');
     const tableBody = document.getElementById('attendance-table-body');
     const totalTimeDisplay = document.getElementById('total-time');
+    const BACKEND_URL = 'https://control-asistencia-metalotecnia.onrender.com';
 
     // Function to format dates
     const formatDate = (dateString) => {
@@ -66,7 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to fetch records from the server
     const fetchAttendance = async (employeeId = null) => {
-        let url = 'http://localhost:3000/api/attendance';
+        // Se corrige la URL de la API para obtener los registros
+        let url = `${BACKEND_URL}/api/attendance`;
         if (employeeId) {
             url += `?employeeId=${employeeId}`;
         }
