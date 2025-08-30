@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const path = require('path');
 
 const app = express();
 const port = 3000;
@@ -9,6 +10,9 @@ const port = 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Servir archivos estáticos del frontend
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Conexión a MongoDB
 mongoose.connect(process.env.MONGODB_URI)
@@ -37,9 +41,9 @@ module.exports = { Attendance, Employee };
 
 // --- RUTAS API ---
 
-// Nueva ruta de prueba para verificar que el servidor está activo
+// Ruta para servir el archivo index.html
 app.get('/', (req, res) => {
-    res.send('Servidor de control de asistencia activo.');
+    res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 // Ruta para obtener un empleado por su ID
